@@ -7,13 +7,25 @@ CFLAGS = -g
 # and tools libmicrohttpd-0.9.63 is placed in a folder
 # This item is retained to facilitate teacher/TA debugging
 # LDFLAGS = -ljsoncpp -L/opt/homebrew/lib/ -lmicrohttpd -ljsonrpccpp-common -ljsonrpccpp-server -ljsonrpccpp-client -lcurl
-LDFLAGS = -ljsoncpp -lmicrohttpd -ljsonrpccpp-common -ljsonrpccpp-server -ljsonrpccpp-client -lcurl
+LDFLAGS = -ljsoncpp -L/opt/homebrew/lib/ -lmicrohttpd -ljsonrpccpp-common -ljsonrpccpp-server -ljsonrpccpp-client -lcurl
 
 INC	=	ecs36b_Common.h
-INC_CL	=	AutoVehicle.h MyClient.h MyServer.h
+INC_CL	=	AutoVehicle.h hw5client.h hw5server.h
 OBJ	=	AutoVehicle.o 
 
 all: MiddleCar LeftMotorcycle RightMotorcycle 
+
+
+
+# server/client
+hw5client.h:		ecs36b_final.json
+	jsonrpcstub ecs36b_final.json --cpp-server=hw5Server --cpp-client=hw5Client
+
+hw5server.h:		ecs36b_final.json
+	jsonrpcstub ecs36b_final.json --cpp-server=hw5Server --cpp-client=hw5Client
+
+MiddleCar.o: MiddleCar.cpp $(INC_CL) $(INC)
+	$(CC) -c $(CFLAGS) MiddleCar.cpp
 
 # classes
 Person.o:		Person.cpp Person.h $(INC)
@@ -23,15 +35,6 @@ AutoVehicle.o:		AutoVehicle.cpp AutoVehicle.h $(INC)
 	$(CC) -c $(CFLAGS) AutoVehicle.cpp
 
 # server/client
-MyClient.h:		ecs36b_final.json
-	jsonrpcstub ecs36b_final.json --cpp-server=MyServer --cpp-client=MyClient
-
-MyServer.h:		ecs36b_final.json
-	jsonrpcstub ecs36b_final.json --cpp-server=MyServer --cpp-client=MyClient
-
-MiddleCar.o: MiddleCar.cpp $(INC_CL) $(INC)
-	$(CC) -c $(CFLAGS) MiddleCar.cpp
-
 LeftMotorcycle.o: LeftMotorcycle.cpp $(INC_CL) $(INC)
 	$(CC) -c $(CFLAGS) LeftMotorcycle.cpp
 
@@ -48,5 +51,5 @@ RightMotorcycle: RightMotorcycle.o $(OBJ)
 	$(CC) RightMotorcycle.o $(OBJ) -o RightMotorcycle $(LDFLAGS)
 
 clean:
-	rm -f *.o *~ MyClient.h MyServer.h MiddleCar LeftMotorcycle RightMotorcycle 
+	rm -f *.o *~ myclient.h myserver.h MiddleCar LeftMotorcycle RightMotorcycle
 

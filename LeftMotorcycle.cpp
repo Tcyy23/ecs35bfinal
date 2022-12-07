@@ -26,25 +26,25 @@ using namespace std;
 Motorcycle left_moto;
 
 // CLASS DECLARATION
-class MyServer : public Server
+class Myhw5Server : public hw5Server
 {
   public:
-    MyServer(AbstractServerConnector &connector, serverVersion_t type);
-    virtual Json::Value request(const Json::Value& argJson);
+    Myhw5Server(AbstractServerConnector &connector, serverVersion_t type);
+    virtual Json::Value request(const Json::Value& json_object);
 };
 
 // CLASS DEFINITIONS
 // constructor
-MyServer::MyServer(AbstractServerConnector &connector, serverVersion_t type) : Server(connector, type)
+Myhw5Server::Myhw5Server(AbstractServerConnector &connector, serverVersion_t type) : hw5Server(connector, type)
 {
-  std::cout << "MyServer Object created" << std::endl;
+  std::cout << "Myhw5Server Object created" << std::endl;
 }
 
 // functions
-Json::Value MyServer::request (const Json::Value& argJson)
+Json::Value Myhw5Server::request (const Json::Value& json_object)
 {
   Json::Value result;
-  result = left_moto.responseMessage(argJson);
+  result = left_moto.responseMessage(json_object);
 
   cout << result.toStyledString() << endl;
 
@@ -74,7 +74,7 @@ int main()
 
   // server stuff
   HttpServer httpserver(7374);
-  MyServer srv(httpserver, JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
+  Myhw5Server srv(httpserver, JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
   srv.StartListening();
   
   std::cout << "Hit enter to stop the Left Motorcycle server" << endl;

@@ -2,7 +2,7 @@
     {
         "name": "request",
         "params": {
-            "json_object": {}  
+            "argJson": {}  
         },
         "returns": {
 	    "response": {}

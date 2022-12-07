@@ -11,9 +11,9 @@
 #include <string>
 
 // for JsonRPCCPP
-#include "myserver.h"
+#include "hw5server.h"
 #include <jsonrpccpp/server/connectors/httpserver.h>
-#include "myclient.h"
+#include "hw5client.h"
 #include <jsonrpccpp/client/connectors/httpclient.h>
 #include <stdio.h>
 #include "ecs36b_Exception.h"
@@ -21,7 +21,7 @@
 using namespace jsonrpc;
 using namespace std;
 
-Auto_V car;
+Car car;
 
 int main()
 {
@@ -31,10 +31,10 @@ int main()
   message = car.sendMessage("emergency", car.dump2JSON());
 
   HttpClient httpclientL("http://127.0.0.1:7374");
-  MyClient clientL(httpclientL, JSONRPC_CLIENT_V2);
+  hw5Client clientL(httpclientL, JSONRPC_CLIENT_V2);
 
   HttpClient httpclientR("http://127.0.0.1:8384");
-  MyClient clientR(httpclientR, JSONRPC_CLIENT_V2);
+  hw5Client clientR(httpclientR, JSONRPC_CLIENT_V2);
 
   int ratingL, ratingR;
   Json::Value leftValue;

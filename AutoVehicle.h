@@ -10,12 +10,14 @@
 class Auto_V
 {
   private:
-    std::vector<Person> passengers;
-    string address;
-    string type;
 
   public:
-    Auto_V(std::vector<Person> argPeople = null, string argAddress = "", string argType = "V");
+    string address;
+    string type;
+    int numPassengers;
+    std::vector<Person> passengers;
+    Auto_V(std::vector<Person> argPeople, string argAddress, string argType);
+    Auto_V();
 
     void setPassengers(std::vector<Person> argPeople);
     void setAddress(string argAddress);
@@ -39,7 +41,7 @@ class Motorcycle: public Auto_V
     
   public:
 
-    Motorcycle(std::vector<Person> argPeople = null, string argAddress = "", string argType = "M");
+    Motorcycle(std::vector<Person> argPeople, string argAddress, string argType);
     Motorcycle();
 
     Json::Value dump2JSON();
@@ -54,15 +56,16 @@ class Car: public Auto_V
 {
   private:
   public:
-    Car(std::vector<Person> argPeople = null, string argAddress = "", string argType = "C")
+    Car(std::vector<Person> argPeople, string argAddress, string argType);
+    Car();
     
     Json::Value dump2JSON();
 
     void makeDecision(Json::Value, Json::Value);
-    void compareNumPeople(Json::Value, Json::Value);
-    void compareScores(AuJson::Valueto_V, Json::Value);
+    int compareNumPeople(Json::Value, Json::Value);
+    int compareScores(Json::Value, Json::Value);
 };
 
-#endif  // _AUTOVEHICLE_H_ 
+#endif  // _AUTOVEHICLE_H_
 
 

@@ -1,7 +1,6 @@
-//
-
 #ifndef _ECS36B_EXCEPTION_
 #define _ECS36B_EXCEPTION_
+
 
 class another
 {
