@@ -14,7 +14,7 @@ class Auto_V
   public:
     string address;
     string type;
-    int numPassengers;
+    int numPassengers=1;
     std::vector<Person> passengers;
     Auto_V(std::vector<Person> argPeople, string argAddress, string argType);
     Auto_V();

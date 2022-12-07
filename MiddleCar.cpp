@@ -30,10 +30,10 @@ int main()
   Json::Value message;
   message = car.sendMessage("emergency", car.dump2JSON());
 
-  HttpClient httpclientL("http://127.0.0.1:7374");
+  HttpClient httpclientL("http://localhost:8383");
   hw5Client clientL(httpclientL, JSONRPC_CLIENT_V2);
 
-  HttpClient httpclientR("http://127.0.0.1:8384");
+  HttpClient httpclientR("http://localhost:8384");
   hw5Client clientR(httpclientR, JSONRPC_CLIENT_V2);
 
   int ratingL, ratingR;

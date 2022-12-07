@@ -16,9 +16,9 @@ Auto_V::Auto_V()
     person.push_back(Person {});
     passengers = person;
 
-    numPassengers = 0;
+    numPassengers = 1;
     address = "";
-    type = "V";
+    type = "Vehicle";
 }
 
 //setting functions
@@ -90,7 +90,7 @@ Motorcycle::Motorcycle()
 
     numPassengers = 0;
     address = "";
-    type = "M";
+    type = "Motorcycle";
     rating = 0;
 }
 

@@ -10,12 +10,10 @@ CFLAGS = -g
 LDFLAGS = -ljsoncpp -L/opt/homebrew/lib/ -lmicrohttpd -ljsonrpccpp-common -ljsonrpccpp-server -ljsonrpccpp-client -lcurl
 
 INC	=	ecs36b_Common.h
-INC_CL	=	AutoVehicle.h hw5client.h hw5server.h
-OBJ	=	AutoVehicle.o 
+INC_CL	=	AutoVehicle.h hw5client.h hw5server.h Person.h
+OBJ	=	AutoVehicle.o Person.o
 
-all: MiddleCar LeftMotorcycle RightMotorcycle 
-
-
+all: MiddleCar LeftMotorcycle RightMotorcycle
 
 # server/client
 hw5client.h:		ecs36b_final.json
@@ -51,5 +49,5 @@ RightMotorcycle: RightMotorcycle.o $(OBJ)
 	$(CC) RightMotorcycle.o $(OBJ) -o RightMotorcycle $(LDFLAGS)
 
 clean:
-	rm -f *.o *~ myclient.h myserver.h MiddleCar LeftMotorcycle RightMotorcycle
+	rm -f *.o *~ hw5client.h hw5server.h MiddleCar LeftMotorcycle RightMotorcycle
 

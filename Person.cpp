@@ -9,7 +9,7 @@ Person::Person(bool argHelmet, int argMedical, int argAge) {
 
 Person::Person() {
     this->wearingHelmet = true;
-    this->medical = 0;
+    this->medical = 3;
     this->age = 18;
 }
 

@@ -3,6 +3,7 @@
 
 #include "ecs36b_Common.h"
 #include "AutoVehicle.h"
+#include "Person.h"
 
 // for Json::value
 #include <json/json.h>
@@ -37,7 +38,7 @@ class Myhw5Server : public hw5Server
 // constructor
 Myhw5Server::Myhw5Server(AbstractServerConnector &connector, serverVersion_t type) : hw5Server(connector, type)
 {
-  std::cout << "Myhw5Server Object created" << std::endl;
+  std::cout << "LiftMotorcycle Object created" << std::endl;
 }
 
 // functions
@@ -55,7 +56,7 @@ Json::Value Myhw5Server::request (const Json::Value& json_object)
 
 int main()
 {
-  cout << "-----Server for Left Motorcycle-----" << endl << endl;
+  cout << "-----Server for Left Motorcycle-----" << endl;
 
   // create passengers for left motorcycle
   bool helmet = true;
@@ -66,20 +67,18 @@ int main()
   passengers.push_back(passenger1);
 
   // creating the left motorcycle
-  string leftm_address = "http://127.0.0.1:7374";
+  string leftm_address = "http://localhost:8383";
   left_moto.setPassengers(passengers);
   left_moto.setAddress(leftm_address);
-  left_moto.setType("M");
+  left_moto.setType("Motorcycle");
 
 
   // server stuff
-  HttpServer httpserver(7374);
+  HttpServer httpserver(8383);
   Myhw5Server srv(httpserver, JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
   srv.StartListening();
   
   std::cout << "Hit enter to stop the Left Motorcycle server" << endl;
-
-  getchar();
   getchar();
   srv.StopListening();
 

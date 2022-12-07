@@ -3,6 +3,7 @@
 
 #include "ecs36b_Common.h"
 #include "AutoVehicle.h"
+#include "Person.h"
 
 // for Json::value
 #include <json/json.h>
@@ -38,7 +39,7 @@ public:
 Myhw5Server::Myhw5Server(AbstractServerConnector &connector, serverVersion_t type)
   : hw5Server(connector, type)
 {
-  std::cout << "Myhw5Server Object created" << std::endl;
+  std::cout << "Right Motorcycle Object created" << std::endl << endl;
 }
 
 // functions
@@ -46,7 +47,7 @@ Json::Value
 Myhw5Server::request(const Json::Value& argJson)
 {
   Json::Value result;
-  result = right_moto.response_message(argJson);
+  result = right_moto.responseMessage(argJson);
 
   cout << result.toStyledString() << endl;
 
@@ -57,7 +58,7 @@ Myhw5Server::request(const Json::Value& argJson)
 
 int main()
 {
-  cout << "-----Server for Right Motorcycle-----" << endl << endl;
+  cout << "-----Server for Right Motorcycle-----" << endl;
 
   // create passengers for right motorcycle
   bool helmet = true;
@@ -68,10 +69,10 @@ int main()
   passengers.push_back(passenger1);
 
   // creating the right motorcycle
-  string rightm_address = "http://127.0.0.1:8384";
+  string rightm_address = "http://localhost:8384";
   right_moto.setPassengers(passengers);
   right_moto.setAddress(rightm_address);
-  right_moto.setType("M");
+  right_moto.setType("Motercycle");
     
   // server stuff
   HttpServer httpserver(8384);
