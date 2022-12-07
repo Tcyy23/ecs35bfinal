@@ -1,5 +1,5 @@
 
-// hw3_miou_2022.cpp
+
 
 #include "ecs36b_Common.h"
 #include "AutoVehicle.h"
@@ -23,29 +23,28 @@
 using namespace jsonrpc;
 using namespace std;
 
-Auto_M left_moto;
+Motorcycle left_moto;
 
-class Myhw5Server : public hw5Server
+// CLASS DECLARATION
+class MyServer : public Server
 {
-public:
-  Myhw5Server(AbstractServerConnector &connector, serverVersion_t type);
-  virtual Json::Value request(const Json::Value& json_object);
+  public:
+    MyServer(AbstractServerConnector &connector, serverVersion_t type);
+    virtual Json::Value request(const Json::Value& json_object);
 };
 
-Myhw5Server::Myhw5Server(AbstractServerConnector &connector, serverVersion_t type)
-  : hw5Server(connector, type)
+// CLASS DEFINITIONS
+// constructor
+MyServer::MyServer(AbstractServerConnector &connector, serverVersion_t type) : Server(connector, type)
 {
-  std::cout << "Myhw5Server Object created" << std::endl;
+  std::cout << "MyServer Object created" << std::endl;
 }
 
 // member functions
-
-Json::Value
-Myhw5Server::request
-(const Json::Value& json_object)
+Json::Value MyServer::request (const Json::Value& json_object)
 {
   Json::Value result;
-  result = l_moto.response_message(json_object);
+  result = left_moto.response_message(json_object);
 
   cout << result.toStyledString() << endl;
 
@@ -53,36 +52,32 @@ Myhw5Server::request
 }
 
 
-int
-main()
+int main()
 {
-  cout << ">>>> Program for Left motorcycle <<<<\n\n";
-  //number of passager
-  int nop = 1;
-  //if the passager is wearing helmet or not
+  cout << "----- Server for Left Motorcycle -----" << endl;
+
+  // create passengers for left motorcycle
   bool helmet = true;
-   
-  //number of medical
-    int med = 6;
-    int spd = 40;
-    int disbetweencar = 30;
-    int age = 40;
-    
-    right_moto.passengers = nop;
-    right_moto.helmet = helmet;
-    right_moto.age = age;
-    right_moto.medical = med;
-    right_moto.speed = spd;
-    right_moto.disbetween_car = disbetweencar
-    right_moto.rightm_address = "http://127.0.0.1:8384";
-    
-  HttpServer httpserver(8384);
-  Myhw5Server srv(httpserver, 
-                  JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
+  int med = 6;
+  int age = 40;
+  Person passenger1(true, med, age);
+  std::vector<Person> passengers;
+  passengers.push_back(passenger1);
+
+  // creating the left motorcycle
+  string leftm_address = "http://127.0.0.1:7374";
+  left_moto.setPassengers(passengers);
+  left_moto.setAddress(leftm_address);
+  left_moto.setType("M");
+
+
+  // server stuff
+  HttpServer httpserver(7374);
+  Myhw5Server srv(httpserver, JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
   srv.StartListening();
   
-  std::cout << "Hit enter to stop the LeftMotorcycle server" << endl;
-  // avoid line break character
+  std::cout << "Hit enter to stop the Left Motorcycle server" << endl;
+
   getchar();
   getchar();
   srv.StopListening();

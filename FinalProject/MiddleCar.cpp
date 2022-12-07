@@ -1,5 +1,4 @@
 
-// hw3_miou_2022.cpp
 
 #include "ecs36b_Common.h"
 #include "AutoVehicle.h"
@@ -24,24 +23,21 @@ using namespace std;
 
 Auto_V car;
 
-
-
-
 int
 main()
 {
-  cout << "===== This is the program for middle car =====\n\n";
+  cout << "----- Client Car -----" << ndl endl << endl;
 
   Json::Value mes;
   mes = car.send_message("emergency", car.dump2JSON());
 
-  HttpClient httpclient_l("http://127.0.0.1:8881");
-  hw5Client myClient_l(httpclient_l, JSONRPC_CLIENT_V2);
+  HttpClient httpclient_l("http://127.0.0.1:7374");
+  CarClient myClient_l(httpclient_l, JSONRPC_CLIENT_V2);
 
-  HttpClient httpclient_r("http://127.0.0.1:8883");
-  hw5Client myClient_r(httpclient_r, JSONRPC_CLIENT_V2);
+  HttpClient httpclient_r("http://127.0.0.1:8384");
+  CarClient myClient_r(httpclient_r, JSONRPC_CLIENT_V2);
 
-  double ratingL, ratingR;
+  int ratingL, ratingR;
   Json::Value myv;
 
   try {

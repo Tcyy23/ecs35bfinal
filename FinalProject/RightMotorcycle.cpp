@@ -23,20 +23,20 @@
 using namespace jsonrpc;
 using namespace std;
 
-Auto_M r_moto;
+Motorcycle right_moto;
 
 
-class Myhw5Server : public hw5Server
+class MyServer : public Server
 {
 public:
-  Myhw5Server(AbstractServerConnector &connector, serverVersion_t type);
+  MyServer(AbstractServerConnector &connector, serverVersion_t type);
   virtual Json::Value request(const Json::Value& json_object);
 };
 
-Myhw5Server::Myhw5Server(AbstractServerConnector &connector, serverVersion_t type)
-  : hw5Server(connector, type)
+MyServer::MyServer(AbstractServerConnector &connector, serverVersion_t type)
+  : Server(connector, type)
 {
-  std::cout << "Myhw5Server Object created" << std::endl;
+  std::cout << "MyServer Object created" << std::endl;
 }
 
 // member functions
@@ -57,31 +57,29 @@ Myhw5Server::request
 int
 main()
 {
-    cout << ">>>> The program for left motorcycle <<<<\n\n";
-    //number of passager
-    int nop = 1;
-    //if the passager is wearing helmet or not
-    bool helmet = true;
-     
-    //number of medical
-      int med = 10;
-      
-      int age = 40;
-  
-    right_moto.passengers = nop;
-    right_moto.helmet = helmet;
-    right_moto.age = age;
-    right_moto.meducal = med;
-    right_moto.rightm_address = "http://127.0.0.1:8883";
+  cout << "----- Server for Right Motorcycle -----" << endl << endl;
 
+  // create passengers for right motorcycle
+  bool helmet = true;
+  int med = 6;
+  int age = 40;
+  Person passenger1(true, med, age);
+  std::vector<Person> passengers;
+  passengers.push_back(passenger1);
 
-  HttpServer httpserver(8883);
-  Myhw5Server srv(httpserver,
-                  JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
+  // creating the right motorcycle
+  string rightm_address = "http://127.0.0.1:8384";
+  right_moto.setPassengers(passengers);
+  right_moto.setAddress(rightm_address);
+  right_moto.setType("M");
+    
+  // server stuff
+  HttpServer httpserver(8384);
+  MyServer srv(httpserver, JSONRPC_SERVER_V1V2); // hybrid server (json-rpc 1.0 & 2.0)
   srv.StartListening();
   
-  std::cout << "Hit enter to stop the RightMotorcycle server" << endl;
-  // avoid line break character
+  std::cout << "Hit enter to stop the Right Motorcycle server" << endl;
+
   getchar();
   getchar();
   srv.StopListening();

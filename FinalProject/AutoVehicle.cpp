@@ -1,39 +1,44 @@
 #include "AutoVehicle.h"
 
 
-// Auto_V
-Auto_V::Motorcycle(int p, string ad, string t, double m,
-                    double s, double ag, bool helmet)
+// AUTO_V DEFINITIONS
+//Constructor
+Auto_V::Auto_V(std::vector<Person> argPeople, string argAddress, string argType)
 {
-  passengers = p;
-  address = ad;
-  type = t;
-  medical = m;
-  speed = s;
-  age = ag;
-  wearinghelmet = helmet;
+  passengers = argPeople;
+  address = argAddress;
+  type = argType;
 }
 
-Json::Value
-Auto_V::dump2JSON
-()
+//setting functions
+void Auto_V::setPassengers(std::vector<Person> argPeople)
+{
+    passengers = argPeople;
+}
+
+void Auto_V::setAddress(string argAddress)
+{
+    address = argAddress;
+}
+
+void Auto_V::setType(string argType)
+{
+    type = argType;
+}
+
+//JSON
+Json::Value Auto_V::dump2JSON()
 {
   Json::Value result;
-  result["passengers"] = passengers;
-  
+  result["passengers"] = passengers.size();
   result["address"] = address;
   result["type"] = type;
-  result["medical"] = medical;
-  result["speed"] = speed;
-  result["age"] = age;
-  result["helmet"] = wearinghelmet;
+  result["rating"] = rating;
 
   return result;
 }
 
-Json::Value 
-Auto_V::send_message
-(string operation, Json::Value obj)
+Json::Value Auto_V::send_message(string operation, Json::Value obj)
 {
   Json::Value result;
 
@@ -43,9 +48,7 @@ Auto_V::send_message
   return result;
 }
 
-Json::Value 
-Auto_V::response_message
-(Json::Value obj)
+Json::Value Auto_V::response_message(Json::Value obj)
 {
   Json::Value result;
   if (obj["operation"] == "emergency")
@@ -61,41 +64,22 @@ Auto_V::response_message
 
 
 
+// MOTORCYCLE DEFINITIONS
+Motorcycle:: Motorcycle(std::vector<Person> argPeople, string argAddress, string argType)
+{
+    passengers = argPeople;
+    address = argAddress;
+    type = argType;
+}
 
-// Auto_M
-Auto_M:: Motorcycle(int p, string ad, string t, double m,
-                          double s, double ag, bool helmet)
-      {
-        passengers = p;
-        address = ad;
-        type = t;
-        medical = m;
-        speed = s;
-        age = ag;
-        wearinghelmet = helmet;
-      }
-
-Json::Value 
-Auto_M::dump2JSON()
+Json::Value Motorcycle::dump2JSON()
 {
   Json::Value result;
   result = Auto_V::dump2JSON();
   return result;
 }
 
-class Motorcycle : public Auto_V
-{
-private:
-public:
-    void calcRating();
-    int calcAgeScore();
-    int calcMedicalScore();
-    int calcHelmetScore();
-    int getRating();
-}
-
-
-void calcRating(Json::Value obj) {
+void Motorcycle::calcRating(Json::Value obj) {
     int tempScore = 0;
 
     tempScore+=calcAgeScore();
@@ -107,7 +91,7 @@ void calcRating(Json::Value obj) {
 }
 
 // the higher the age, the more the car will hit that motorcycle
-int calcAgeScore() {
+int Motorcycle::calcAgeScore() {
     int ageScore = 0;
         int currentAge = age();
 
@@ -129,7 +113,7 @@ int calcAgeScore() {
 
 // medical is the severity of previous health issues of the passengers
 // the higher the medical score, the less the car will hit that motorcycle
-int calcMedicalScore() {
+int Motorcycle::calcMedicalScore() {
     int medicalScore = 0;
         int medical = med();
 
@@ -150,7 +134,7 @@ int calcMedicalScore() {
 }
 
 // if they are wearing a helmet, the car is more likely to hit that motorcycle
-int calcHelmetScore() {
+int Motorcycle::calcHelmetScore() {
     int helmetScore = 0;
         bool hasHelmet = helmet();
 
@@ -159,7 +143,7 @@ int calcHelmetScore() {
         } else {
             helmetScore += 1;
         }
-    }
+    
     return helmetScore;
 }
 

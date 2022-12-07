@@ -5,38 +5,58 @@
 // AutoVehicle.h
 
 #include "ecs36b_Common.h"
+#include "Person.h"
 
 class Auto_V
 {
-private:
-public:
-    Auto_V(int p = 0, string hu = "", string t = "M",double m = 0,
-           double s = 0, double age = 0, bool helmet = true);
+  private:
+    std::vector<Person> passengers;
+    string address;
+    string type;
 
-virtual Json::Value dump2JSON();
-virtual Json::Value send_message(string, Json::Value);
-virtual Json::Value response_message(Json::Value);
+  public:
+    Auto_V(std::vector<Person> argPeople = null, string argAddress = "", string argType = "V");
 
+    void setPassengers(std::vector<Person> argPeople);
+    void setAddress(string argAddress);
+    void setType(string argType);
 
-virtual double cal_rating(Json::Value);
-virtual void make_decision(double, double, double);
+    virtual Json::Value dump2JSON();
+    virtual Json::Value sendMessage(string, Json::Value);
+    virtual Json::Value responseMessage(Json::Value);
 
 };
 
 
 class Motorcycle: public Auto_V
 {
- private:
- public:
+  private:
+    void calcRating();
+    int calcAgeScore();
+    int calcMedicalScore();
+    int calcHelmetScore();
+    int rating;
+    
+  public:
 
-    Motorcycle(int p = 0, string hu = "", string t = "M",double m = 0,
-               double s = 0, double age = 0, bool helmet = true);
+    Motorcycle(std::vector<Person> argPeople = null, string argAddress = "", string argType = "M");
 
-  virtual Json::Value dump2JSON();
-  virtual double cal_rating(Json::Value);
-  virtual void make_decision(double, double);
+    Json::Value dump2JSON();
+    // double calRating(Json::Value);
+    int getRating();
   
 };
+
+
+class Car: public Auto_V
+{
+  private:
+  public:
+    Car(std::vector<Person> argPeople = null, string argAddress = "", string argType = "C")
+    
+    Json::Value dump2JSON();
+    void makeDecision(double, double);
+}
 
 #endif  /* _AUTOVEHICLE_H_ */
 
